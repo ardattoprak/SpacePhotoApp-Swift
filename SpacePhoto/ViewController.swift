@@ -27,14 +27,18 @@ class ViewController: UIViewController {
         networkController.fetchPhotoInfo { photoInfo in
             guard let photoInfo = photoInfo else { return }
             
-            // Navigationbardaki başlık.
-            self.title = photoInfo.title
-            self.descriptionLabel.text = photoInfo.description
             
-            if let copyright = photoInfo.copyright {
-                self.copyrightLabel.text = copyright
-            }else {
-                self.copyrightLabel.isHidden = true
+            //  Grand Central Dispatch
+            DispatchQueue.main.async {
+                // Main queue
+                self.title = photoInfo.title
+                self.descriptionLabel.text = photoInfo.description
+                
+                if let copyright = photoInfo.copyright {
+                    self.copyrightLabel.text = copyright
+                }else {
+                    self.copyrightLabel.isHidden = true
+                }
             }
         }
     }
