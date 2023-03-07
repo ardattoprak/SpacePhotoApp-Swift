@@ -5,7 +5,7 @@
 //  Created by Arda Toprak on 7.03.2023.
 //
 
-import Foundation
+import UIKit
 
 class NetworkController {
     
@@ -29,5 +29,13 @@ class NetworkController {
         }
         
         dataTask.resume()
+    }
+    
+    func fetchPhoto(from url:URL,completion: @escaping (UIImage?) -> Void){
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            if let data = data , let image = UIImage(data: data){
+                completion(image)
+            }else { completion(nil)}
+        }.resume()
     }
 }

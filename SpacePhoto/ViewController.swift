@@ -25,12 +25,20 @@ class ViewController: UIViewController {
         copyrightLabel.text = ""
         
         networkController.fetchPhotoInfo { photoInfo in
-            guard let photoInfo = photoInfo else { return }
-            
-            
+            if let photoInfo = photoInfo{
+                self.updateUI(with: photoInfo)
+            }
+        }
+    }
+    
+    // MARK: - Functions
+    
+    func updateUI(with photoInfo: PhotoInfo) {
+        networkController.fetchPhoto(from: photoInfo.url) { (image) in
             //  Grand Central Dispatch
             DispatchQueue.main.async {
                 // Main queue
+                self.imageView.image = image
                 self.title = photoInfo.title
                 self.descriptionLabel.text = photoInfo.description
                 
@@ -42,8 +50,6 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-    // MARK: - Functions
     
     // MARK: - Actions
     
